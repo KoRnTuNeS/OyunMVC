@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = ViewBag.KategoriAdi;
+    Layout = "~/Views/Shared/_LayoutIcerik.cshtml";
+}
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<OyunMVC.Data.Model.Haber>
+<div class="review">
+    <div class="container">
+        <h2>@ViewBag.KategoriAdi</h2>
+        <div class="review-md1">
+            @foreach (OyunMVC.Data.Model.Haber item in Model)
+            {
+                <div class="col-md-4 sed-md">
+                    <div class=" col-1">
+                        <a href="/Haber/Icerik/@item.ID"><img class="img-responsive" src="http://localhost:64584/@item.Resim" alt=""></a>
+                        <h4><a href="/Haber/Icerik/@item.ID">@item.Baslik</a></h4>
+                        <p>@Html.Raw(item.KisaAciklama)</p>
+                    </div>
+                </div>
+            }
+            <div class="clearfix"> </div>
+        </div>        
+    </div>
+    <nav>
+        @Html.PagedListPager(Model, sayfa => Url.Action("Liste", new { sayfa }), PagedList.Mvc.PagedListRenderOptions.Classic)
+    </nav>
+</div>
+

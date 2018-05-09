@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Slider Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<OyunMVC.Data.Model.Slider>
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <header class="panel-heading">@ViewBag.Title</header>
+        <div class="panel-body">
+            @if (TempData["Bilgi"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Bilgi"]
+                </div>
+            }
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Resim</th>
+                            <th>Başlık</th>
+                            <th>Eklenme Tarihi</th>
+                            <th>Haber</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ID</td>
+                                <td><img src="@item.ResimYolu" alt="@item.Baslik" style="width:100px;" /></td>
+                                <td>@item.Baslik</td>
+                                <td>@item.EklenmeTarihi.ToString("MM.dd.yyyy")</td>
+                                <td>@item.Haber.Baslik</td>
+                                <td>
+                                    @if (item.AktifMi == true)
+                                    {
+                                        <b class="label label-success">Aktif</b>
+                                    }
+                                    else
+                                    {
+                                        <b class="label label-danger">Pasif</b>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Duzenle", "Slider", new { id = item.ID })" class="btn btn-default btn-sm">Düzenle</a>
+                                    <button class="btn btn-default btn-sm" id="btn-SliderSil" data-id="@item.ID">Sil</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @Html.PagedListPager(Model, sayfa => Url.Action("Index", new { sayfa }), PagedList.Mvc.PagedListRenderOptions.Classic)
+</div>
+

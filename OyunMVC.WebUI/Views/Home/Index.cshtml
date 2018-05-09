@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Anasayfa";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+@model List<OyunMVC.Data.Model.Haber>
+@{ List<OyunMVC.Data.Model.Yorum> yorumListe = ViewBag.Yorumlar;}
+<div class="container">
+    <div class="col-md-4 latest">
+        <h4>Son Haberler</h4>
+        @foreach (var item in Model.OrderByDescending(x => x.ID).Take(4))
+        {
+            <div class="late">
+                <a href="/Haber/Icerik/@item.ID" class="fashion"><img class="img-responsive " src="http://localhost:64584/@item.Resim" alt=""></a>
+                <div class="grid-product">
+                    <span>@item.EklenmeTarihi</span>
+                    <p><a href="/Haber/Icerik/@item.ID"> @item.Baslik </a></p>
+                    <a class="comment" href="/Haber/Icerik/@item.ID"><i> </i> @yorumListe.Where(x => x.HaberID == item.ID).Count() Yorum</a>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-4 latest">
+        <h4>Başlıca</h4>
+        @foreach (var item in Model.OrderBy(x => x.ID).Take(4))
+        {
+            <div class="late">
+                <a href="/Haber/Icerik/@item.ID" class="fashion"><img class="img-responsive " src="http://localhost:64584/@item.Resim" alt=""></a>
+                <div class="grid-product">
+                    <span>@item.EklenmeTarihi</span>
+                    <p><a href="/Haber/Icerik/@item.ID"> @item.Baslik </a></p>
+                    <a class="comment" href="/Haber/Icerik/@item.ID"><i> </i> @yorumListe.Where(x => x.HaberID == item.ID).Count() Yorum</a>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-4 latest">
+        <h4>En Çok Okunanlar</h4>
+        @foreach (var item in Model.OrderByDescending(x => x.Okunma).Take(4))
+        {
+            <div class="late">
+                <a href="/Haber/Icerik/@item.ID" class="fashion"><img class="img-responsive " src="http://localhost:64584/@item.Resim" alt=""></a>
+                <div class="grid-product">
+                    <span>@item.EklenmeTarihi</span>
+                    <p><a href="/Haber/Icerik/@item.ID"> @item.Baslik </a></p>
+                    <a class="comment" href="/Haber/Icerik/@item.ID"><i> </i> @yorumListe.Where(x => x.HaberID == item.ID).Count() Yorum</a>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        }
+    </div>
+    <div class="clearfix"> </div>
+</div>

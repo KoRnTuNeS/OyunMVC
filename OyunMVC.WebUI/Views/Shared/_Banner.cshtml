@@ -1,0 +1,17 @@
+﻿<div class="container">
+    <div class="ism-slider" data-transition_type="zoom" data-play_type="loop" data-image_fx="zoompan" id="my-slider">
+        <ol>
+            @foreach (OyunMVC.Data.Model.Slider item in ViewBag.Slider)
+            {
+                <li>
+                    <a href="/Haber/Icerik/@item.HaberID">
+                        <img src="http://localhost:64584/@item.ResimYolu">
+                    </a>
+                    <a class="ism-caption ism-caption-0" href="/Haber/Icerik/@item.HaberID" target="_self">@item.Baslik</a>
+                </li>
+            }
+        </ol>
+    </div>
+    <!---->
+
+</div>

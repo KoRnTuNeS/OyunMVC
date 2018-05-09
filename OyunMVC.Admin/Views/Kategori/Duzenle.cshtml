@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Kategori Düzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model OyunMVC.Data.Model.Kategori
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <header class="panel-heading">@ViewBag.Title</header>
+            <div class="panel-body">
+                @Html.HiddenFor(x => x.ID)
+                <form role="form">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Üst Kategori</label>
+                        @Html.DropDownListFor(x => x.ParentID, new SelectList(ViewBag.Kategoriler, "ID", "KategoriAdi"), ("Seçiniz"), new { @class = "form-control", id = "ParentID" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kategori Adı</label>
+                        @Html.TextBoxFor(x => x.KategoriAdi, new { @class = "form-control", id = "kategoriAdi", placeholder = "Kategori Adı" })
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(x => x.AktifMi, new { @checked = "checked" , id = "kategoriAktif" }) Aktif Mi?
+                        </label>
+                    </div>
+                    <a href="#" class="btn btn-default" onclick="KategoriDuzenle();">Kaydet</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

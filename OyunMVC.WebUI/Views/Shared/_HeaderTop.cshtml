@@ -1,0 +1,27 @@
+﻿<div class="top-header">
+    <div class="container">
+        <div class="top-head">
+            <ul class="header-in">
+                <li><a href="/Home/Contact">   İletişim</a></li>
+                @if (Session["mKullaniciID"] == null)
+                {
+                    <li><a href="/Account/Login">   Giriş Yap</a></li>
+                    <li><a href="/Account/Register">   Kayıt Ol</a></li>
+                }
+                else
+                {
+                    <li><a href="/Account/Logout">   Çıkış Yap</a></li>
+                }
+            </ul>
+            <div class="search">
+                @using (Html.BeginForm("Listele", "Haber", FormMethod.Get))
+                {
+                    <input type="text" name="arama" placeholder="Başlık Arama">
+                    <input type="submit" value="">
+                }
+            </div>
+
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

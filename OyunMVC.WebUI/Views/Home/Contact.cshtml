@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "İletişim";
+    Layout = "~/Views/Shared/_LayoutIcerik.cshtml";
+}
+
+<div class="contact">
+
+    <div class="container">
+        <h2>İletişim</h2>
+        <div class="contact-form">
+            <div class="col-md-8 contact-grid">
+                @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+                {
+                    <input type="text" name="Ad" id="ad" placeholder="Adınız">
+
+                    <input type="text" name="MailAdresi" id="mail" placeholder="Email adresiniz">
+                    <input type="text" name="Konu" id="konu" placeholder="Konu">
+
+                    <textarea cols="77" rows="6" name="Mesaj" id="mesaj" placeholder="Mesajınız"></textarea>
+                    <div class="send">
+                        @*<input type="submit" value="Gönder">*@
+                        <a href="#" onclick="MesajGonder();">Gönder</a>
+                    </div>
+                }
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model OyunMVC.Data.Model.Kullanici
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <header class="panel-heading">@ViewBag.Title</header>
+            <div class="panel-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kullanıcı Rolü</label>
+                        @Html.DropDownListFor(x => x.RolID, new SelectList(ViewBag.Roller, "ID", "RolAdi"), ("Seçiniz"), new { @class = "form-control", id = "rolID" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ad Soyad</label>
+                        @Html.TextBoxFor(x => x.AdSoyad, new { @class = "form-control", id = "adSoyad", placeholder = "Ad Soyad" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">E-mail</label>
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", id = "email", placeholder = "E-Mail" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Şifre</label>
+                        @Html.TextBoxFor(x => x.Sifre, new { @class = "form-control", id = "sifre", placeholder = "Şifre" })
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(x => x.AktifMi, new { @checked = "checked", id = "kullaniciAktifMi" }) Aktif Mi?
+                        </label>
+                    </div>
+                    <a href="#" class="btn btn-default" onclick="KullaniciEkle();">Kaydet</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

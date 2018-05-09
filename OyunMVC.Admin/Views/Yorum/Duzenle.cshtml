@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Duzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model OyunMVC.Data.Model.Yorum
+@{ string adres = (string)Session["Adres"];}
+
+@using (Html.BeginForm("Duzenle", "Yorum", FormMethod.Post))
+{
+    <input type="hidden" id="urlAdres" value=@adres />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <header class="panel-heading">@ViewBag.Title</header>
+                <div class="panel-body">
+                    @Html.HiddenFor(x => x.ID, new { @id = "ID"})
+                    @Html.HiddenFor(x => x.HaberID, new { @id = "haberID" })
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Gelen Yorum</label>
+                        @Html.TextAreaFor(x => x.GelenYorum, new { @class = "form-control", id = "gelenYorum", placeholder = "Gelen Yorum" })
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(x => x.AktifMi, new { @checked = "checked", id = "yorumAktifMi" }) Aktif Mi?
+                        </label>
+                    </div>
+                    <a href="#" class="btn btn-default" onclick="YorumDuzenle();">Kaydet</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

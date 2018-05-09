@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Slider Düzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model OyunMVC.Data.Model.Slider
+
+<script src="~/ckeditor/ckeditor.js"></script>
+
+@using (Html.BeginForm("Duzenle", "Slider", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <header class="panel-heading">@ViewBag.Title</header>
+                <div class="panel-body">
+                    @Html.HiddenFor(x => x.ID)
+                    @if (TempData["Bilgi"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Bilgi"]
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Haber</label>
+                        @Html.DropDownListFor(x => x.HaberID, new SelectList(ViewBag.Haberler, "ID", "Baslik"), ("Seçiniz"), new { @class = "form-control", id = "sliderHaber" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Başlık</label>
+                        @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control", id = "sliderBaslik", placeholder = "Başlık" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Açıklama</label>
+                        @Html.TextArea("Aciklama")
+                        <script type="text/javascript">
+                            var editor = CKEDITOR.instances['Aciklama'];
+                            if (editor) { editor.destroy(true); }
+                            CKEDITOR.replace('Aciklama', {
+                                enterMode: CKEDITOR.ENTER_BR
+                            });
+                        </script>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Slider Resimler</label>
+                        <input type="file" class="form-control" name="ResimYolu" accept="image/*"/>
+                        <img src="@Model.ResimYolu" alt="@Model.Baslik" style="width: 100px;" />
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(x => x.AktifMi, new { @checked = "checked", id = "sliderAktifMi" }) Aktif Mi?
+                        </label>
+                    </div>
+                    @*<a href="#" class="btn btn-default" onclick="HaberEkle();">Kaydet</a>*@
+                    <button type="submit" class="btn btn-default">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

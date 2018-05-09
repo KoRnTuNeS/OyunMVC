@@ -1,0 +1,99 @@
+﻿@{ OyunMVC.Data.Model.Haber haber = ViewBag.Haber;}
+@{
+    ViewBag.Title = haber.Baslik;
+    Layout = "~/Views/Shared/_LayoutIcerik.cshtml";
+}
+@*@model OyunMVC.Data.Model.Haber*@
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<OyunMVC.Data.Model.Yorum>
+
+<div class="container">
+    <div class="single">
+        <div class="blog-to">
+
+            <img class="img-responsive sin-on" src="http://localhost:64584/@haber.Resim" alt="" />
+            <div class="blog-top">
+                <div class="blog-left">
+                    <b>@haber.EklenmeTarihi.Day</b>
+                    <span>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(haber.EklenmeTarihi.Month)</span>
+                </div>
+                <div class="top-blog">
+                    <a class="fast" href="#">@haber.Baslik </a>
+                    <p>Hazırlayan <a href="#">@haber.Kullanici.AdSoyad</a> | <a href="#">@haber.Okunma kez okundu</a></p>
+                    <p class="sed">
+                        @Html.Raw(haber.Aciklama)
+                    </p>
+                    @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque malesuada purus a convallis dictum. Phasellus sodales varius diam, non sagittis lectus. Morbi id magna ultricies ipsum condimentum scelerisque vel quis felis. Donec et purus nec leo interdum sodales nec sit amet magna.</p>*@
+
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+
+
+
+        <div class="single-middle">
+
+            <h3>@ViewBag.YorumSayisi Yorum</h3>
+            @foreach (OyunMVC.Data.Model.Yorum item in Model)
+            {
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="~/images/co.png" alt="">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="#">@item.Kullanici.AdSoyad</a></h4>
+                        <span style="color: #A09F9F;">@item.EklenmeTarihi</span>
+                        <p>
+                            @item.GelenYorum
+                        </p>
+                    </div>
+                </div>
+            }
+            <nav>
+                @Html.PagedListPager(Model, sayfa => Url.Action("Icerik", new { sayfa }), PagedList.Mvc.PagedListRenderOptions.Classic)
+            </nav>
+        </div>
+
+        <div class="single-bottom">
+
+            <h3>Yorum Yaz</h3>
+            @if (Session["mKullaniciID"] == null)
+            {
+                <textarea disabled cols="77" rows="6" value=" " onfocus="this.value='';" onblur="if (this.value == '') {this.value = 'Message';}">Yorum yazmak için giriş yapınız.</textarea>
+
+                    <input type="submit" disabled value="Gönder">
+            }
+            else
+            {
+                int kullaniciID = (int)Session["mKullaniciID"];
+                using (Html.BeginForm("Ekle", "Yorum", FormMethod.Post))
+                {
+                    <input type="hidden" id="haberID" name="HaberID" value=@haber.ID />
+                    <input type="hidden" id="kullaniciID" name="KullaniciID" value=@kullaniciID />
+                    <textarea cols="77" rows="6" id="gelenYorum" maxlength="150" onkeyup="TextAreaKarakterSayisiDogrula()" name="GelenYorum"></textarea>
+                    <span>Kalan karakter sayısı :</span> <span id="KalanKarakterSayac">150</span>
+                    <br />
+                    <br />
+                    <a href="#" onclick="YorumEkle();">Gönder</a>
+                    <script type="text/javascript">
+                        function TextAreaKarakterSayisiDogrula() {
+                            var sonSayi = 150 - document.getElementById("gelenYorum").value.length;
+                            if (sonSayi >= 0) {
+                                document.getElementById("KalanKarakterSayac").innerHTML = sonSayi;
+                            }
+                            else {
+                                document.getElementById("gelenYorum").value = document.getElementById("Adres").value.substring(0, 150);
+                                document.getElementById("KalanKarakterSayac").innerHTML = 0;
+                            }
+                        }
+                    </script>
+                }
+            }
+        </div>
+    </div>
+</div>
